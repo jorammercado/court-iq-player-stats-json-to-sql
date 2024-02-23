@@ -13,6 +13,9 @@ count = 0
 // player per game per year
 for (let i = 0; i < playerpergame.length; i++) {
 
+    if( playerpergame[i].lg!=="NBA" )
+        continue
+
     let { season, player, birth_year, pos, age, experience, lg, tm, g, gs,
         mp_per_game, fg_per_game, fga_per_game, fg_percent, x3p_per_game,
         x3pa_per_game, x3p_percent, x2p_per_game, x2pa_per_game, x2p_percent,
