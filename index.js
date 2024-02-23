@@ -53,8 +53,10 @@ for (let i = 0; i < playerpergame.length; i++) {
 
     if (playerIndex.indexOf(player) === -1) {
         playerIndex.push(player)
-        resultPlayers.push({ player, birth_year })
-        formatResultSQLPlayers += `('${resultPlayers[indexPlayer].player}', '${resultPlayers[indexPlayer].birth_year}'),\n`
+        resultPlayers.push({ player, birth_year, season, pos, age, experience, tm })
+        formatResultSQLPlayers += `('${resultPlayers[indexPlayer].player}', '${resultPlayers[indexPlayer].birth_year}'`+
+        `, ${resultPlayers[indexPlayer].age}, ${resultPlayers[indexPlayer].season}, ${resultPlayers[indexPlayer].experience}`+
+        `, '${resultPlayers[indexPlayer].pos}', '${resultPlayers[indexPlayer].tm}'),\n`
         indexPlayer++
     }
 
