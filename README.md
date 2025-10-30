@@ -1,47 +1,56 @@
 # Court-IQ Player Stats JSON to SQL Converter
 
-## Project Overview
+## 📂 Project Overview
 
-This repository contains a Node.js-based transformation script built during the early development of **Court-IQ**, a full-stack basketball analytics application. At the time, live APIs were not yet integrated, and this tool was used to process historical NBA player performance data from 1947 to the present.
+This repository contains a **Node.js-based transformation script** created during the early development of **Court-IQ**, a full-stack basketball analytics application. Before integrating live APIs, this script was essential for processing **historical NBA player data from 1947 to present**.
 
-The script converts structured JSON data derived from CSVs (originally sourced from Kaggle) into SQL `INSERT` statements for seeding a PostgreSQL database. This historical dataset was later integrated into the [Court-IQ Backend](https://github.com/jorammercado/court-iq-server).
+It transforms structured JSON data (converted from CSVs) into SQL `INSERT` statements that populate a PostgreSQL database. This data is now seeded in the [Court-IQ Backend](https://github.com/jorammercado/court-iq-server).
 
-> Although this data is currently seeded and deployed in the backend, it is not actively consumed by the Court-IQ frontend. Real-time APIs such as [API-NBA on RapidAPI](https://rapidapi.com/api-sports/api/api-nba) were prioritized for production due to their up-to-date nature. However, those APIs do not include comprehensive historical records like the ones in this dataset. In future development, this historical layer may be integrated into the frontend to enrich the basketball analytics and fan experience.
+> 🔗 Although the historical data is seeded and deployed in the backend, it's not actively consumed by the frontend. Production use prioritizes real-time APIs like [API-NBA on RapidAPI](https://rapidapi.com/api-sports/api/api-nba). These APIs, however, lack deep historical records. This dataset may eventually enhance frontend features such as retro analytics or franchise history.
 
-## Data Source
+## 🔍 Data Source
 
-Data was extracted from the Kaggle dataset:
+Extracted from Kaggle:
 **[NBA, ABA, BAA Stats — Kaggle](https://www.kaggle.com/datasets/sumitrodatta/nba-aba-baa-stats)**
 
-From the many CSV files available, this script specifically utilizes:
-- `Player Per Game.csv`
-- `Team Summaries.csv`
+Used CSVs:
 
-These were converted into JSON format before processing.
+* `Player Per Game.csv`
+* `Team Summaries.csv`
 
-## Purpose
+These were converted to JSON format before processing.
 
-To seed the backend PostgreSQL database with historical player and season data, enabling a complete experience during the prototype phase of Court-IQ before transitioning to live data from sources such as [API-NBA on RapidAPI](https://rapidapi.com/api-sports/api/api-nba).
+## 🚀 Purpose
 
-## Features
+To seed the Court-IQ backend PostgreSQL database with rich, historical player-season data for:
 
-- **Historical Data Coverage**: Converts over 29,000 player-season records and 4,600+ individual players.
-- **SQL Generation**: Creates bulk `INSERT` SQL statements for two tables: `players` and `seasons`.
-- **Data Cleaning**: Handles inconsistent formatting, missing values, and type conversions.
-- **Relational Structure**: Ensures normalized relationships between players and their multiple season stats.
+* Development and prototyping
+* Simulated analytics features
+* Potential future integration with frontend UI
 
-## Output
+## ✨ Features
 
-- `OutputSQLPlayers.sql`: Contains records like:
+* **⌚ Decades of Coverage**: 29,000+ player-season records, 4,600+ unique players
+* **✂ Data Cleaning**: Handles missing values, formatting quirks, and inconsistent types
+* **⚖️ Relational Normalization**: Distinct `players` and `seasons` tables
+* **📅 Season-aware**: Maintains link between player and corresponding season stats
+* **♲ Output**: Two SQL files with bulk `INSERT` statements
+
+## 💾 Output Files
+
+* `OutputSQLPlayers.sql`:
+
   ```sql
   ('A.J. Green', 'NA', 24, 2024, 2, 'SG', 'MIL'),
   ```
-- `OutputSQLSeasons.sql`: Contains detailed season statistics like:
+
+* `OutputSQLSeasons.sql`:
+
   ```sql
   ('1', 2024, 'A.J. Green', 'SG', 24, 2, 'NBA', 'MIL', 36, 0, 9.3, ..., 4.3),
   ```
 
-## Expected Table Structure
+## 📊 Expected PostgreSQL Table Schema
 
 ```sql
 CREATE TABLE players (
@@ -93,71 +102,69 @@ CREATE TABLE seasons (
 );
 ```
 
-## Usage Instructions
+## ⚙️ Usage Instructions
 
-1. **Ensure Node.js is installed.**
+### 1. Install Node.js
 
-2. **Clone the repository:**
+Ensure Node.js is installed locally.
+
+### 2. Clone the Repository
+
 ```bash
 git clone https://github.com/jorammercado/court-iq-player-stats-json-to-sql.git
 cd court-iq-player-stats-json-to-sql
 ```
 
-3. **Prepare your input JSON files:**
-- `playerpergame.json` — Converted from `Player Per Game.csv`
-- `teamsummaries.json` — Converted from `Team Summaries.csv`
+### 3. Prepare Input Files
 
-You can convert CSVs to JSON using free online tools like [CSVJSON](https://csvjson.com/csv2json).
+Convert these CSVs into JSON:
 
-4. **Run the script:**
+* `Player Per Game.csv` ➞ `playerpergame.json`
+* `Team Summaries.csv` ➞ `teamsummaries.json`
+
+You can use [CSVJSON](https://csvjson.com/csv2json) or a Node script.
+
+### 4. Run the Script
+
 ```bash
 node index.js
 ```
 
-This will generate:
-- `OutputSQLPlayers.sql`
-- `OutputSQLSeasons.sql`
+Generates:
 
-These can then be integrated into your PostgreSQL seed process.
+* `OutputSQLPlayers.sql`
+* `OutputSQLSeasons.sql`
 
-## Glossary of Acronyms & Fields
+You can now integrate them into a PostgreSQL seeding process.
 
-- `tm`: Team abbreviation (e.g., LAL for Los Angeles Lakers)
-- `pos`: Player position (e.g., SG = Shooting Guard)
-- `lg`: League (usually "NBA")
-- `g`: Games played
-- `gs`: Games started
-- `mp_per_game`: Minutes played per game
-- `fg`: Field goals
-- `fga`: Field goals attempted
-- `fg_percent`: Field goal percentage
-- `x3p`: Three-point field goals
-- `x3pa`: Three-point field goals attempted
-- `x3p_percent`: Three-point field goal percentage
-- `x2p`: Two-point field goals
-- `e_fg_percent`: Effective field goal percentage
-- `ft`: Free throws
-- `fta`: Free throw attempts
-- `ft_percent`: Free throw percentage
-- `orb`, `drb`, `trb`: Offensive, Defensive, and Total Rebounds
-- `ast`: Assists
-- `stl`: Steals
-- `blk`: Blocks
-- `tov`: Turnovers
-- `pf`: Personal fouls
-- `pts`: Points per game
+## 📃 Glossary of Stats Fields
 
-## Related Projects
+* `tm`: Team abbreviation (e.g. LAL = Lakers)
+* `pos`: Position (e.g. SG = Shooting Guard)
+* `lg`: League (NBA, ABA, etc.)
+* `g`: Games played
+* `gs`: Games started
+* `mp_per_game`: Minutes per game
+* `fg`, `fga`, `fg_percent`: Field goals + shooting %
+* `x3p`, `x3pa`, `x3p_percent`: 3-point stats
+* `x2p`, `x2pa`, `x2p_percent`: 2-point stats
+* `e_fg_percent`: Effective FG%
+* `ft`, `fta`, `ft_percent`: Free throw stats
+* `orb`, `drb`, `trb`: Rebounds
+* `ast`, `stl`, `blk`: Assists, steals, blocks
+* `tov`: Turnovers
+* `pf`: Personal fouls
+* `pts`: Points per game
 
-- [Court-IQ Frontend](https://github.com/jorammercado/court-iq)
-- [Court-IQ Backend](https://github.com/jorammercado/court-iq-server)
+## 🔗 Related Repositories
 
-## License
+* [Court-IQ Frontend](https://github.com/jorammercado/court-iq)
+* [Court-IQ Backend](https://github.com/jorammercado/court-iq-server)
 
-This project is licensed under the [MIT License](https://opensource.org/license/mit).
+## 📄 License
 
-## Contact
+Licensed under the [MIT License](https://opensource.org/license/mit).
 
-For questions or feedback:
-- Joram Mercado — [GitHub](https://github.com/jorammercado) | [LinkedIn](https://www.linkedin.com/in/jorammercado)
+## 📧 Contact
 
+* Joram Mercado — [GitHub](https://github.com/jorammercado) | [LinkedIn](https://www.linkedin.com/in/jorammercado)
